@@ -1,46 +1,32 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import ColorCounter from '../components/ColorCounter';
 
 
 const COLOR_INCREMENT = 15;
-const SquareScreen = () => {
-// ---- The PARENT Component ---
 
-/* State Components */
+ const reducer = (state, action) => {
+        // state === {red: number, green: number, blue: number} --- state is an object as well
+        //action === {colorToChange: 'red' || 'green' || 'blue', amount: 15 || -15 } --- action is an object
 
-    const [red, setRed] = useState(0);
-    const [green, setGreen] = useState(0);
-    const [blue, setBlue] = useState(0);
-
-    const resetColors = () => {
-        setRed(0);
-        setGreen(0);
-        setBlue(0);
-    }
-/*----------- */
-
-    //console.log(blue)
-    const setColor = (color, change) => {
-
-        switch(color){
+        switch(action.colorToChange){
+            // Never modify state values directly e.g. state.red += 15
             case 'red':
-               ((red+change) > 255 || (red+change) < 0) ? null : setRed(red+change);
-               return;
-
+                return {...state, red: state.red + action.amount};
             case 'green':
-                ((green+change) > 255 || (green+change) < 0 ? null : setGreen(green+change));
-                return;
-
+                return {...state, green: state.green + action.amount};
+            case 'blue':
+                return {...state, blue: state.blue + action.amount};
             default:
-               ((blue+change > 255 || (blue+change) < 0) ? null : setBlue(blue+change));
-                return;
-                
+                return state;
         }
-        //color === 'red', 'green', 'blue'
-        
-    };
-    
+    }
+const SquareScreen = () => {
+// ---- The PARENT Component ---   
+
+   
+    const [ state, dispatch ] = useReducer(reducer, {red: 0, green: 0, blue: 0});
+    //state === {red: 0, green: 0, blue: 0}  dispatch - run our reducer
     return (
         <View>
            <View style={styles.header}>
@@ -49,20 +35,20 @@ const SquareScreen = () => {
             <Text style={styles.textBlue}>Color</Text>
         </View> 
         <ColorCounter 
-            onIncrease={() => setColor('red', COLOR_INCREMENT)} 
-            onDecrease={() => setColor('red', -1 * COLOR_INCREMENT)} 
+            onIncrease={() => {}} 
+            onDecrease={() => {}} 
             color='Red'
             colorStyle={styles.textRed}
             />
         <ColorCounter 
-            onIncrease={() => setColor('green', COLOR_INCREMENT)}
-            onDecrease={() => setColor('green', -1 * COLOR_INCREMENT)}
+            onIncrease={() => {}}
+            onDecrease={() => {}}
             color='Green'
             colorStyle={styles.textGreen}
             />
         <ColorCounter 
-            onIncrease={() => setColor('blue', COLOR_INCREMENT)} 
-            onDecrease={() => setColor('blue', -1*COLOR_INCREMENT)} 
+            onIncrease={() => {}} 
+            onDecrease={() => {}} 
             color='Blue'
             colorStyle={styles.textBlue}
             />
@@ -76,9 +62,7 @@ const SquareScreen = () => {
                     backgroundColor:`rgb(${red}, ${green}, ${blue})`, 
                     alignSelf: 'center'}
                     }/>
-
-            <View style={styles.spacer} />
-            <Button title='Rest Colors' onPress={()=> resetColors()}/>
+            
         </View>
        
     );
