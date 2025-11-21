@@ -27,6 +27,7 @@ const SquareScreen = () => {
    
     const [ state, dispatch ] = useReducer(reducer, {red: 0, green: 0, blue: 0});
     //state === {red: 0, green: 0, blue: 0}  dispatch - run our reducer
+    const { red, green, blue } = state;
     return (
         <View>
            <View style={styles.header}>
@@ -35,20 +36,20 @@ const SquareScreen = () => {
             <Text style={styles.textBlue}>Color</Text>
         </View> 
         <ColorCounter 
-            onIncrease={() => {}} 
-            onDecrease={() => {}} 
+            onIncrease={() => { dispatch({ colorToChange: 'red', amount: COLOR_INCREMENT}) }} 
+            onDecrease={() => { dispatch({ colorToChange: 'red', amount: -1*COLOR_INCREMENT}) }} 
             color='Red'
             colorStyle={styles.textRed}
             />
         <ColorCounter 
-            onIncrease={() => {}}
-            onDecrease={() => {}}
+            onIncrease={() => { dispatch({ colorToChange: 'green', amount: COLOR_INCREMENT}) }}
+            onDecrease={() => { dispatch({ colorToChange: 'green', amount: -1*COLOR_INCREMENT}) }}
             color='Green'
             colorStyle={styles.textGreen}
             />
         <ColorCounter 
-            onIncrease={() => {}} 
-            onDecrease={() => {}} 
+            onIncrease={() => { dispatch({ colorToChange: 'blue', amount: COLOR_INCREMENT}) }} 
+            onDecrease={() => { dispatch({ colorToChange: 'blue', amount: -1*COLOR_INCREMENT}) }} 
             color='Blue'
             colorStyle={styles.textBlue}
             />
