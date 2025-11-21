@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, Image } from 'react-native';
 import BigBlue from '../../assets/blue_whale1.png';
 
 const MyScreen = () => {
+    //For my personal use
     return(
         <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <Text style={styles.text1}>Blue Whale here 🐋</Text>
