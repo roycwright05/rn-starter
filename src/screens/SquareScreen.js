@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import ColorCounter from '../components/ColorCounter';
 
 
@@ -12,35 +12,33 @@ const SquareScreen = () => {
     const [red, setRed] = useState(0);
     const [green, setGreen] = useState(0);
     const [blue, setBlue] = useState(0);
+
+    const resetColors = () => {
+        setRed(0);
+        setGreen(0);
+        setBlue(0);
+    }
 /*----------- */
 
     //console.log(blue)
     const setColor = (color, change) => {
+
+        switch(color){
+            case 'red':
+               ((red+change) > 255 || (red+change) < 0) ? null : setRed(red+change);
+               return;
+
+            case 'green':
+                ((green+change) > 255 || (green+change) < 0 ? null : setGreen(green+change));
+                return;
+
+            default:
+               ((blue+change > 255 || (blue+change) < 0) ? null : setBlue(blue+change));
+                return;
+                
+        }
         //color === 'red', 'green', 'blue'
-        if (color === 'red'){
-            if( (red + change) > 255 || (red + change) < 0 ){
-                return;
-            }else{
-                setRed(red+change)
-            }
-        }
-
-        if (color === 'green'){
-            if((green + change) > 255 || (green + change) < 0){
-                return;
-            }else{
-                setGreen(green+change);
-            }
-        }
-
-        if(color === 'blue'){
-            if((blue + change) > 255 || (blue + change) < 0){
-                return;
-            }else{
-
-                setBlue(blue+change);
-            }
-        }
+        
     };
     
     return (
@@ -78,6 +76,9 @@ const SquareScreen = () => {
                     backgroundColor:`rgb(${red}, ${green}, ${blue})`, 
                     alignSelf: 'center'}
                     }/>
+
+            <View style={styles.spacer} />
+            <Button title='Rest Colors' onPress={()=> resetColors()}/>
         </View>
        
     );
